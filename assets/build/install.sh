@@ -440,6 +440,7 @@ chmod +x /usr/local/sbin/healthcheck
 
 # purge build dependencies and cleanup apt
 DEBIAN_FRONTEND=noninteractive apt-get purge -y --auto-remove ${BUILD_DEPENDENCIES}
+apt-get clean
 rm -rf /var/lib/apt/lists/*
 
 # clean up caches
