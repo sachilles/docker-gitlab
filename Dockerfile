@@ -25,7 +25,10 @@ ENV GITLAB_INSTALL_DIR="${GITLAB_HOME}/gitlab" \
 
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
-      wget ca-certificates apt-transport-https gnupg2
+    wget ca-certificates apt-transport-https gnupg2 \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
 RUN set -ex && \
  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E1DD270288B4E6030699E45FA1715D88E1DF1F24 \
  && echo "deb http://ppa.launchpad.net/git-core/ppa/ubuntu bionic main" >> /etc/apt/sources.list \
@@ -52,6 +55,7 @@ RUN set -ex && \
  && locale-gen en_US.UTF-8 \
  && DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales \
  && gem install --no-document bundler -v 2.1.4 \
+ &&  apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
 COPY assets/build/ ${GITLAB_BUILD_DIR}/
