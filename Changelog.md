@@ -14,6 +14,11 @@ https://gitlab.com/gitlab-org/gitlab-foss/blob/master/CHANGELOG.md) for the list
 - gitlab-shell: upgrade to v13.15.1
 
 **13.8.3**
+- gitlab: upgrade CE to v13.8.4
+- gitaly: upgrade to v13.8.4
+- gitlab-shell: upgrade to v13.15.1
+
+**13.8.3**
 - gitlab: upgrade CE to v13.8.3
 - gitaly: upgrade to v13.8.3
 - golang: upgrade to v1.15.8
