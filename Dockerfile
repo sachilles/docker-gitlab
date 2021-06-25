@@ -1,13 +1,13 @@
 FROM ubuntu:focal-20210609
 
-ARG VERSION=14.0.0
+ARG VERSION=14.0.1
 
 ENV GITLAB_VERSION=${VERSION} \
     RUBY_VERSION=2.7 \
     GOLANG_VERSION=1.16.5 \
     GITLAB_SHELL_VERSION=13.19.0 \
     GITLAB_PAGES_VERSION=1.40.0 \
-    GITALY_SERVER_VERSION=14.0.0 \
+    GITALY_SERVER_VERSION=14.0.1 \
     GITLAB_USER="git" \
     GITLAB_HOME="/home/git" \
     GITLAB_LOG_DIR="/var/log/gitlab" \
@@ -45,7 +45,7 @@ RUN set -ex && \
  && apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
       sudo supervisor logrotate locales curl \
-      nginx openssh-server postgresql-client-12 postgresql-contrib-12 redis-tools \
+      nginx openssh-server postgresql-client-13 postgresql-contrib-13 redis-tools \
       git-core ruby${RUBY_VERSION} python3 python3-docutils nodejs yarn gettext-base graphicsmagick \
       libpq5 zlib1g libyaml-0-2 libssl1.1 \
       libgdbm6 libreadline8 libncurses5 libffi7 \
