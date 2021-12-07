@@ -8,6 +8,11 @@ This file only reflects the changes that are made in this image. Please refer to
 - golang: upgrade to v1.17.4
 
 **14.4.2**
+- gitlab: upgrade CE to v14.4.3
+- gitaly: upgrade to v14.4.3
+- golang: upgrade to v1.17.4
+
+**14.4.2**
 - gitlab: upgrade CE to v14.4.2
 - gitaly: upgrade to v14.4.2
 - redis: upgrade to v6.2.6
