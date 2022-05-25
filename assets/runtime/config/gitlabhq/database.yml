@@ -6,10 +6,15 @@ production:
     adapter: postgresql
     encoding: {{DB_ENCODING}}
     database: {{DB_NAME}}
-    host: {{DB_HOST}}
-    port: {{DB_PORT}}
     username: {{DB_USER}}
     password: "{{DB_PASS}}"
-    pool: {{DB_POOL}}
-    prepared_statements: {{DB_PREPARED_STATEMENTS}}
-
+    host: {{DB_HOST}}
+    # load_balancing:
+    #   hosts:
+    #     - host1.example.com
+    #     - host2.example.com
+    #   discover:
+    #     nameserver: 1.2.3.4
+    #     port: 8600
+    #     record: secondary.postgresql.service.consul
+    #     interval: 300
