@@ -6,6 +6,7 @@ This file only reflects the changes that are made in this image. Please refer to
 
 - ruby: upgrade to v2.7.7
 - ruby: upgrade to v3.0.5
+- ubuntu: upgrade to jammy-20221101
 
 **15.6.2**
 
