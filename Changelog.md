@@ -5,6 +5,7 @@ This file only reflects the changes that are made in this image. Please refer to
 **WIP**
 
 - ruby: upgrade to v2.7.7
+- ruby: upgrade to v3.0.5
 
 **15.6.2**
 
