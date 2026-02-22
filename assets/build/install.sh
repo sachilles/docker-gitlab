@@ -22,6 +22,7 @@ export GOROOT PATH
 # TODO Verify, if this is necessary or not.
 # BUILD_DEPENDENCIES="gcc g++ make patch pkg-config cmake paxctl \
 BUILD_DEPENDENCIES="gcc g++ make patch pkg-config cmake \
+  meson \
   libc6-dev \
   libpq-dev zlib1g-dev libssl-dev \
   libgdbm-dev libreadline-dev libncurses5-dev libffi-dev \
