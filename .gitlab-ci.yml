@@ -4,12 +4,22 @@ services:
   - docker:27-dind
 
 stages:
+  - lint
   - build
 
 variables:
   DOCKER_TLS_CERTDIR: "/certs"
   DOCKER_DRIVER: overlay2
   DOCKER_BUILDKIT: "1"
+
+shellcheck:
+  stage: lint
+  image: koalaman/shellcheck-alpine:stable
+  script:
+    - shellcheck --version
+    - |
+      find . -type f \( -name "*.sh" -o -name "*.bash" \) -print0 | \
+      xargs -0 -r -e SC2086,SC2181
 
 before_script:
   - export VERSION=$(cat VERSION 2>/dev/null || echo "latest")
