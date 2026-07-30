@@ -14,6 +14,7 @@ variables:
   DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
   DOCKER_DRIVER: overlay2
   DOCKER_BUILDKIT: "1"
+  BUILDKIT_PROGRESS: "plain"
 
 shellcheck:
   stage: lint
