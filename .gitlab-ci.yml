@@ -38,9 +38,9 @@ before_script:
 .build_template:
   stage: build
   script:
+    - docker pull "${DOCKER_IMAGE}:${CACHE_TAG}" || true
     - docker build \
         --pull \
-        --cache-from "${DOCKER_IMAGE}:${CACHE_TAG}" \
         --build-arg VCS_REF="$(git rev-parse --short HEAD)" \
         --build-arg BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
         --tag "${IMAGE_TAG}" .
