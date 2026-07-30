@@ -14,46 +14,31 @@ before_script:
       --password-stdin \
       "${CI_REGISTRY}"
 
-docker:build:
+.build_template:
   stage: build
+  script:
+    - docker build \
+        --pull \
+        --cache-from "${DOCKER_IMAGE}:${CACHE_TAG}" \
+        --build-arg VCS_REF="$(git rev-parse --short HEAD)" \
+        --build-arg BUILD_DATE="$(date -u +"%Y-%m-%dT%H:%M:%SZ")" \
+        --tag "${IMAGE_TAG}" .
+    - docker push "${IMAGE_TAG}"
+
+docker:build:
+  extends: .build_template
   only:
     - master
-  script:
-    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
-    - docker build
-      --pull
-      --cache-from=${DOCKER_IMAGE}
-      --build-arg=VCS_REF=$(git rev-parse --short HEAD)
-      --build-arg=BUILD_DATE="$(date +"%Y-%m-%d %H:%M:%S%:z")"
-      --tag ${DOCKER_IMAGE} .
-    - docker push ${DOCKER_IMAGE}
 
 docker:build:branches:
-  stage: build
+  extends: .build_template
   only:
     - branches
   except:
     - master
-  script:
-    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
-    - docker build
-      --pull
-      --cache-from=${DOCKER_IMAGE}:${CI_COMMIT_REF_SLUG}
-      --build-arg=VCS_REF=$(git rev-parse --short HEAD)
-      --build-arg=BUILD_DATE="$(date +"%Y-%m-%d %H:%M:%S%:z")"
-      --tag ${DOCKER_IMAGE}:${CI_COMMIT_REF_SLUG} .
-    - docker push ${DOCKER_IMAGE}:${CI_COMMIT_REF_SLUG}
 
 docker:build:release:
+  extends: .build_template
   stage: build
   only:
     - tags
-  script:
-    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
-    - docker build
-      --pull
-      --cache-from=${DOCKER_IMAGE}:${VERSION}
-      --build-arg=VCS_REF=$(git rev-parse --short HEAD)
-      --build-arg=BUILD_DATE="$(date +"%Y-%m-%d %H:%M:%S%:z")"
-      --tag ${DOCKER_IMAGE}:${VERSION} .
-    - docker push ${DOCKER_IMAGE}:${VERSION}
