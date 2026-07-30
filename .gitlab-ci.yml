@@ -18,8 +18,8 @@ shellcheck:
   script:
     - shellcheck --version
     - |
-      find . -type f \( -name "*.sh" -o -name "*.bash" \) -print0 | \
-      xargs -0 -r -e SC2086,SC2181
+      find . -type f \( -name "*.sh" -o -name "*.bash" \) -print0 |
+      xargs -0 -r shellcheck -e SC2086,SC2181
 
 before_script:
   - export VERSION=$(cat VERSION 2>/dev/null || echo "latest")
