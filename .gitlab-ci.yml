@@ -8,7 +8,6 @@ variables:
 
 shellcheck:
   stage: lint
-  image: koalaman/shellcheck-alpine:stable
   script:
     - shellcheck --version
     - |
