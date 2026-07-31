@@ -1,16 +1,8 @@
-image: docker:27-git
-
-services:
-  - name: docker:27-dind
-
 stages:
   - lint
   - build
 
 variables:
-  DOCKER_TLS_CERTDIR: ""
-  DOCKER_HOST: "tcp://docker:2376"
-
   DOCKER_BUILDKIT: "1"
   BUILDKIT_PROGRESS: "plain"
 
