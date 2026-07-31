@@ -32,19 +32,30 @@ before_script:
       --username "${CI_REGISTRY_USER:-gitlab-ci-token}" \
       --password-stdin \
       "${CI_REGISTRY}"
-  - docker buildx create \
+  - |
+    docker buildx inspect gitlab-builder >/dev/null 2>&1 || \
+    docker buildx create \
       --driver docker-container \
-      --use \
-      --name gitlab-builder || docker buildx use gitlab-builder
+      --name gitlab-builder
+  - docker buildx use gitlab-builder
   - docker buildx inspect --bootstrap
 
 .build_template:
   stage: build
+  interruptible: true
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - api_failure
+      - stuck_or_timeout_failure
   script:
     - |
       docker buildx build \
         --pull \
         --push \
+        --provenance=false \
+        --cache-from type=registry,ref="${DOCKER_IMAGE}:cache" \
         --cache-from type=registry,ref="${DOCKER_IMAGE}:${CACHE_TAG}" \
         --cache-to type=registry,ref="${DOCKER_IMAGE}:${CACHE_TAG}",mode=max \
         --build-arg BUILDKIT_INLINE_CACHE=1 \
