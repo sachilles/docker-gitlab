@@ -25,6 +25,9 @@ shellcheck:
 
 before_script:
   # - export VERSION="$(cat VERSION 2>/dev/null || echo latest)"
+  - docker version
+  - docker buildx version
+  - docker buildx ls
   - export DOCKER_IMAGE="${DOCKER_IMAGE:-${CI_REGISTRY_IMAGE}}"
   - |
     echo "${CI_REGISTRY_PASSWORD:-$CI_JOB_TOKEN}" |
@@ -33,10 +36,12 @@ before_script:
       --password-stdin \
       "${CI_REGISTRY}"
   - |
-    docker buildx inspect gitlab-builder >/dev/null 2>&1 || \
-    docker buildx create \
-      --driver docker-container \
-      --name gitlab-builder
+    if ! docker buildx inspect gitlab-builder >/dev/null 2>&1; then
+      docker buildx create \
+        --driver docker-container \
+        --name gitlab-builder
+    fi
+
   - docker buildx use gitlab-builder
   - docker buildx inspect --bootstrap
 
